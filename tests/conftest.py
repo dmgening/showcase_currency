@@ -4,7 +4,7 @@ from showcase_currency.app import app_factory
 
 @pytest.fixture()
 async def application(loop):
-    app = await app_factory(loop)
+    app = await app_factory()
     yield app
     await app['redis'].flushall()
 

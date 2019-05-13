@@ -1,5 +1,6 @@
 import factory
 import pytest
+import aioredis
 
 from showcase_currency.store import CurrencyUploader, currency_convert, _rate_key
 
@@ -14,8 +15,9 @@ class ConversionFactory(factory.Factory):
 
 
 @pytest.fixture
-def redis(application):
-    return application['redis']
+async def redis(loop):
+    return await aioredis.create_redis_pool(
+        'redis://localhost', minsize=5, maxsize=10, loop=loop)
 
 
 @pytest.fixture

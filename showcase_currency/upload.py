@@ -32,7 +32,7 @@ async def upload_view(request):
         return error_response('Malformed request body', status=400)
 
     try:
-        replace_current = False
+        replace_current = request.rel_url.query.get('replace') == 1
         uploader = CurrencyUploader(request.app['redis'], replace=replace_current)
         for record in payload:
             uploader.save(**record)
